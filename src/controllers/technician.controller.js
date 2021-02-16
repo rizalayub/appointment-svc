@@ -1,13 +1,12 @@
 
-// var express = require('express');
-// var router = express.Router();
-// var paymentSvc = require('../services/payment.service')
+var express = require('express');
+var router = express.Router();
+var technicianSvc = require('../services/technician.service')
     
-// // payment 
-// router.get("/init", paymentSvc.init);
-// router.get("/makePayment", paymentSvc.makePayment);
+// payment 
+router.post("/login", technicianSvc.login);
  
-// module.exports = router;
+module.exports = router;
 
 
 
