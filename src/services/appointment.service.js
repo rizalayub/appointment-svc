@@ -12,23 +12,33 @@ exports.create = (req, res) => {
 
   const {technicianid, dentistid, date, time, notes,equipmentid } = req.body
 
-  var sql = `INSERT INTO appointment (technicianid, dentistid, equipmentid, date, time, notes) VALUES (${technicianid},${dentistid},${equipmentid},'${date}','${time}','${notes}')`;
-  console.log(sql)
+
+  var sql = `SELECT * from appointment where date = '${date}' and technicianid = ${technicianid} and dentistid = ${dentistid}`
   con.query(sql, function (err, result) {
-    if (err){
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Tutorial."
-      });
-    } 
+    if(result.length > 0){
+      res.send("You already make appointment for the dentist for this date, please choose different date");
+    }
     else{
-      console.log("1 record inserted");
-      res.send("You have success make an appointment");
+      sql = `INSERT INTO appointment (technicianid, dentistid, equipmentid, date, time, notes) VALUES (${technicianid},${dentistid},${equipmentid},'${date}','${time}','${notes}')`;
+      console.log(sql)
+      con.query(sql, function (err, result) {
+        if (err){
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while creating the Tutorial."
+          });
+        } 
+        else{
+          console.log("1 record inserted");
+          res.send("You have success make an appointment");
+        }
+        
+      })
     }
     
-  });
+  })
 
-};
+}
 
 // Retrieve all appointment from the database.
 exports.findAll = (req, res) => {
@@ -108,6 +118,23 @@ exports.update = (req, res) => {
 // Delete a appointment with the specified id in the request
 exports.delete = (req, res) => {
   const id = req.params.id;
+
+  var sql = `delete from appointment where id = ${id}`;
+  console.log(sql)
+  con.query(sql, function (err, result) {
+    if (err){
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while deleting the appointment."
+      });
+    } 
+    else{
+      console.log("records deleted");
+      res.send("success deleted");
+    }
+    
+  });
+
 
 };
 

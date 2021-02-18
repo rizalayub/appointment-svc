@@ -1,10 +1,10 @@
-const conn = require("../models/db");
+const con = require("../models/db");
 
 // login technician
 exports.login = (req, res) => {
  
   const {username, password} = req.body
-  var sql = `SELECT * from technician where username = ${username} and password = ${password}`;
+  var sql = `SELECT * from technician where username = '${username}' and password = '${password}'`;
   console.log(sql)
   con.query(sql, function (err, result) {
     if (err){
@@ -14,7 +14,13 @@ exports.login = (req, res) => {
       });
     } 
     else{
-      res.send(200);
+      if(result.length > 0){
+        res.status(200).json({status : 1});
+      }
+      else{
+        res.status(200).json({status : 2}); // password not match
+      }
+      
     }
     
   }); 
