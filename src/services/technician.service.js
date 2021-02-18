@@ -15,7 +15,8 @@ exports.login = (req, res) => {
     } 
     else{
       if(result.length > 0){
-        res.status(200).json({status : 1});
+        console.log(result)
+        res.status(200).json({status : 1, technicianid : result[0].id, name : result[0].name });
       }
       else{
         res.status(200).json({status : 2}); // password not match

@@ -16,7 +16,7 @@ exports.create = (req, res) => {
   var sql = `SELECT * from appointment where date = '${date}' and technicianid = ${technicianid} and dentistid = ${dentistid}`
   con.query(sql, function (err, result) {
     if(result.length > 0){
-      res.send("You already make appointment for the dentist for this date, please choose different date");
+      res.send("You already make appointment for the dentist om this date, please choose different date");
     }
     else{
       sql = `INSERT INTO appointment (technicianid, dentistid, equipmentid, date, time, notes) VALUES (${technicianid},${dentistid},${equipmentid},'${date}','${time}','${notes}')`;
@@ -51,8 +51,9 @@ exports.findAll = (req, res) => {
 // Find a single appointment with an id
 exports.findOne = (req, res) => {
   const date = req.params.date;
+  const id = req.params.techid;
  
-  var sql = `SELECT * from appointment where date = '${date}' order by time`;
+  var sql = `SELECT * from appointment where date = '${date}' and technicianid = ${id} order by time`;
   console.log(sql)
   con.query(sql, function (err, result) {
     if (err){

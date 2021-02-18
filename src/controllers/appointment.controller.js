@@ -11,7 +11,7 @@
 
 
   // Retrieve a single appointment with date
-  router.get("/:date", appointSvc.findOne);
+  router.get("/loadAppointment/:date/:techid", appointSvc.findOne);
 
   // Retrieve a single appointment with id
   router.get("/getAppointment/:id", appointSvc.findAppointment);
